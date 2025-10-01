@@ -1,3 +1,4 @@
+import os
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langgraph.prebuilt import create_react_agent
 from langchain_groq import ChatGroq
@@ -5,7 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 os.environ["GROQ_API_KEY"]=os.getenv("GROQ_API_KEY")
 import asyncio
-import os
+
 
 async def main():
     """_summary_
@@ -37,10 +38,11 @@ async def main():
     agent = create_react_agent(model, tools)
     
     response = await agent.ainvoke(
-        {"messages": [{"role": "user", "content": "what's (3 + 5) x 12?"}]}
+        # {"messages": [{"role": "user", "content": "what's (3 + 5) x 12?"}]}
+        {"messages": [{"role": "user", "content": "what's the weather in banglore and what's (3 + 5) x 12?"}]}
     )
     
-    print(response[-1].content)
+    print(response["messages"][-1].content)
 
 
 
